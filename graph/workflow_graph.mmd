@@ -12,6 +12,7 @@ graph TD;
 	hotel_booking_agent(hotel_booking_agent)
 	car_rental_booking_agent(car_rental_booking_agent)
 	excursion_booking_agent(excursion_booking_agent)
+	train_booking_agent(train_booking_agent)
 	__end__([<p>__end__</p>]):::last
 	__start__ --> fetch_user_info;
 	car_rental_booking_agent -.-> __end__;
@@ -26,6 +27,8 @@ graph TD;
 	supervisor_agent -.-> flight_booking_agent;
 	supervisor_agent -.-> hotel_booking_agent;
 	supervisor_agent -.-> research_agent;
+	supervisor_agent -.-> train_booking_agent;
+	train_booking_agent -.-> __end__;
 	classDef default fill:#f2f0ff,line-height:1.2,stroke:#5a3e9e,color:#5a3e9e
 	classDef first fill-opacity:0
 	classDef last fill:#bfb6fc
