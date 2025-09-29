@@ -4,37 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5cd0aa35-22c1-42d1-bdb2-199c7642e825" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/TripAssistant.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agents/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/agents/agent_creation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/doc/db.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/doc/llm.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graph/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graph/draw_graph.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graph/env_utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graph/graph_builder.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graph/supervisor_node.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/llm/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/llm/llm_provider.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prompt/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prompt/flights_prompt.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/car_tools.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/flights_tools.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/hotel_tools.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/location_trans.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/retriever_vector.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/search_tool.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/trip_tools.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/travel.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/travel_agent_backup.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/travel_new.sqlite" afterDir="false" />
+    <list default="true" id="5cd0aa35-22c1-42d1-bdb2-199c7642e825" name="更改" comment="add train agent">
+      <change afterPath="$PROJECT_DIR$/prompt/flight_booking.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prompt/research.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agents/agent_creation.py" beforeDir="false" afterPath="$PROJECT_DIR$/agents/agent_creation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph/agent_nodes.py" beforeDir="false" afterPath="$PROJECT_DIR$/graph/agent_nodes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph/graph_builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/graph/graph_builder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prompt/supervisor.md" beforeDir="false" afterPath="$PROJECT_DIR$/prompt/supervisor.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/flights_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/flights_tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +27,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="add_train_agent" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -74,7 +57,7 @@
     "Python.graph_builder.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "complete-tools",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "D:/新建文件夹/PythonProject/TripAssistant"
   }
@@ -133,6 +116,19 @@
       <option name="presentableId" value="Default" />
       <updated>1758961239250</updated>
     </task>
+    <task id="LOCAL-00001" summary="add train agent">
+      <option name="closed" value="true" />
+      <created>1759067193514</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1759067193514</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add train agent" />
+    <option name="LAST_COMMIT_MESSAGE" value="add train agent" />
   </component>
 </project>
