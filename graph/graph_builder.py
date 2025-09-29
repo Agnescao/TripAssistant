@@ -3,6 +3,7 @@ from langgraph.constants import START, END
 from langgraph.graph import MessagesState, StateGraph
 import os
 
+from agents.agent_creation import create_agents
 from graph.supervisor_node import get_user_info
 
 
@@ -17,13 +18,13 @@ memory = MemorySaver()
 def dummy_node(state):
     """占位节点函数"""
     return state
-
+supervisor_agent = create_agents("supervisor_agent","basic",)
 
 graph=(
     StateGraph(State)
     .add_node('fetch_user_info', get_user_info)
     # add supervisor agent node to manage the workflow
-    .add_node('supervisor_agent', dummy_node,
+    .add_node('supervisor_agent', supervisor_agent,
               destinations=("research_agent", 'flight_booking_agent', 'hotel_booking_agent', 'car_rental_booking_agent',
                             'excursion_booking_agent', 'train_booking_agent', END))
     .add_node('research_agent', dummy_node, destinations=(END,))
