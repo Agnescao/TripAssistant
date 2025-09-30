@@ -4,6 +4,7 @@ from langgraph.graph import MessagesState, StateGraph
 import os
 
 from agents.agent_creation import create_agents
+from graph.agent_nodes import supervisor_agent
 from graph.supervisor_node import get_user_info
 
 
@@ -14,11 +15,6 @@ class State(MessagesState):
 memory = MemorySaver()
 
 
-# 定义节点处理函数
-def dummy_node(state):
-    """占位节点函数"""
-    return state
-supervisor_agent = create_agents("supervisor_agent","basic",)
 
 graph=(
     StateGraph(State)
@@ -27,7 +23,7 @@ graph=(
     .add_node('supervisor_agent', supervisor_agent,
               destinations=("research_agent", 'flight_booking_agent', 'hotel_booking_agent', 'car_rental_booking_agent',
                             'excursion_booking_agent', 'train_booking_agent', END))
-    .add_node('research_agent', dummy_node, destinations=(END,))
+    .add_node('research_agent', research_agent, destinations=(END,))
     .add_node('flight_booking_agent', dummy_node, destinations=('recommendation_agent', END))  # 可以转向推荐
     .add_node('hotel_booking_agent', dummy_node, destinations=('recommendation_agent', END))   # 可以转向推荐
     .add_node('car_rental_booking_agent', dummy_node, destinations=(END,))

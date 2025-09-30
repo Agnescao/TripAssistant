@@ -8,6 +8,8 @@ from typing import Optional, List, Dict, Any
 from langchain_core.tools import tool
 
 from tools.dbconnection import dbconnection
+from tools.confirmation_tool import generic_confirmation
+from tools.checkpoint_manager import checkpoint_manager
 
 @tool
 def fetch_flight_info(config: RunnableConfig) -> List[Dict]:
@@ -115,6 +117,7 @@ def update_flight_info(ticket_no:str, new_flight_id:str, config:RunnableConfig) 
 
     configuration = config.get('configurable', {})
     passenger_id = configuration.get('passenger_id', None)
+    thread_id = configuration.get('thread_id', 'default_thread')
     if not passenger_id:
         raise ValueError("Passenger ID is required.")
 
@@ -160,18 +163,38 @@ def update_flight_info(ticket_no:str, new_flight_id:str, config:RunnableConfig) 
         conn.close()
         return f"Passenger {passenger_id} already has a ticket for flight {new_flight_id}."
 
-
+    # 请求用户确认更新操作
+    confirmation_message = f"确认更新机票: 将机票 {ticket_no} 更改为航班 {new_flight_id}?"
+    operation_details = {
+        "ticket_no": ticket_no,
+        "new_flight_id": new_flight_id,
+        "passenger_id": passenger_id,
+        "flight_details": new_flight_dict
+    }
+    
+    confirmation_result = generic_confirmation.invoke({
+        "message": confirmation_message,
+        "operation_details": operation_details
+    })
+    
+    if "拒绝" in confirmation_result or "n" in confirmation_result.lower():
+        return f"用户取消了机票更新操作: {ticket_no} to {new_flight_id}"
+    
     # update the flight id in ticket_flights table
     update_query = "update ticket_flights set flight_id=? where ticket_no=?"
     cursor.execute(update_query, (new_flight_id, ticket_no))
     conn.commit()
+    
+    # 保存检查点
+    messages = [f"机票 {ticket_no} 已更新为航班 {new_flight_id}"]
+    checkpoint_manager.save_checkpoint(thread_id, messages)
+    
     cursor.close()
     conn.close()
     return f"Ticket {ticket_no} has been updated to flight {new_flight_id}."
 
 
-@ tool
-
+@tool
 def cancel_flight(ticket_no:str, config:RunnableConfig) -> str:
     """
      cancel flight based on user input.
@@ -184,6 +207,7 @@ def cancel_flight(ticket_no:str, config:RunnableConfig) -> str:
     """
     configuration = config.get('configurable', {})
     passenger_id = configuration.get('passenger_id', None)
+    thread_id = configuration.get('thread_id', 'default_thread')
     if not passenger_id:
         raise ValueError("Passenger ID is required.")
 
@@ -209,11 +233,30 @@ def cancel_flight(ticket_no:str, config:RunnableConfig) -> str:
         conn.close()
         return f"Ticket {ticket_no} has already been cancelled."
 
+    # 请求用户确认取消操作
+    confirmation_message = f"确认取消机票: 取消机票 {ticket_no}?"
+    operation_details = {
+        "ticket_no": ticket_no,
+        "passenger_id": passenger_id
+    }
+    
+    confirmation_result = generic_confirmation.invoke({
+        "message": confirmation_message,
+        "operation_details": operation_details
+    })
+    
+    if "拒绝" in confirmation_result or "n" in confirmation_result.lower():
+        return f"用户取消了机票取消操作: {ticket_no}"
+    
     # cancel the flight
     update_query = "update ticket_flights set status='C' where ticket_no=?"
     cursor.execute(update_query, (ticket_no,))
     conn.commit()
+    
+    # 保存检查点
+    messages = [f"机票 {ticket_no} 已取消"]
+    checkpoint_manager.save_checkpoint(thread_id, messages)
+    
     cursor.close()
     conn.close()
     return f"Ticket {ticket_no} has been cancelled."
-
