@@ -1,0 +1,12 @@
+reasoning:
+   base_url: https://api-inference.modelscope.cn/v1
+   model: "Qwen/Qwen3-8B"
+   api_key: 'ms-115bced9-1a9f-4c11-bd75-a3213b79545e'
+   max_retries: 3 # Maximum number of retries for LLM calls
+
+basic:
+   base_url: https://api.openai.com/v1
+   api_key: 'sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+   model: "gpt-3.5-turbo"
+   max_retries: 3
+
