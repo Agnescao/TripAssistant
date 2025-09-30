@@ -1,7 +1,7 @@
 reasoning:
    base_url: https://api-inference.modelscope.cn/v1
    model: "Qwen/Qwen3-8B"
-   api_key: 'ms-115bced9-1a9f-4c11-bd75-a3213b79545e'
+   api_key: 'ms-xxxxxxxxx'
    max_retries: 3 # Maximum number of retries for LLM calls
 
 basic:
