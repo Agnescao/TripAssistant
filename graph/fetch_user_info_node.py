@@ -3,6 +3,7 @@ from langchain_core.runnables import RunnableConfig
 from langgraph.graph import MessagesState
 
 from tools.flights_tools import fetch_flight_info
+from tools.train_tools import fetch_train_info
 
 
 def format_flight_info(flight_data:list[dict]) -> list[str]:
@@ -27,6 +28,26 @@ def format_flight_info(flight_data:list[dict]) -> list[str]:
     return formatted_info
 
 
+def format_train_info(train_data):
+    """format train information into a readable string."""
+    if not train_data:
+        return "No train information available."
+
+    formatted_info = "Here are the available trains:\n"
+    for train in train_data:
+        formatted_info += (
+            f"-------------------------\n"
+            f"Your train ticket details:\n"
+            f"Ticket_id: {train.get('ticket_id', 'N/A')}\n"
+            f"Train Number: {train.get('train_number', 'N/A')}\n"
+            f"Departure: {train.get('departure', 'N/A')} at {train.get('departure_time', 'N/A')}\n"
+            f"Arrival: {train.get('arrival', 'N/A')} at {train.get('arrival_time', 'N/A')}\n"
+            f"Seat_no: {train.get('seat_no', 'N/A')}\n"
+            f"Class: {train.get('class', 'N/A')}\n"
+            f"Price: {train.get('price', 'N/A')}\n"
+            "-------------------------\n"
+        )
+    return formatted_info
 
 
 
@@ -53,6 +74,9 @@ def get_user_info(state: MessagesState, config: RunnableConfig):
 
     """fetch train info as above"""
     train_data = fetch_train_info(config)
-    return {
-        "messages": [flight_message],  # 新增 AIMessage
-    }
+    if train_data:
+        train_message=(AIMessage(content=format_train_info(train_data), id='user_info_success'))
+    else:
+        train_message=(AIMessage(content="No train information available.", id='user_info_failed'))
+
+    return {"messages": [flight_message,train_message]}
