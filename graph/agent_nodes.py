@@ -1,5 +1,6 @@
 # Handoffs
 from typing import Annotated
+import os
 
 from langchain_core.tools import tool, InjectedToolCallId
 from langgraph.graph import MessagesState
@@ -23,7 +24,7 @@ def create_handoff_tool(agent_name, description):
     name = f"assign_to_{agent_name}"
     description = description or f"ask {agent_name} for help"
 
-    @tool(name, description)
+    @tool(name, description=description)
     def assign_to_agent(state:Annotated[MessagesState,InjectedState],tool_call_id:Annotated[str,InjectedToolCallId]) -> Command:
         """Assign a task to another agent.
         Args:
@@ -82,14 +83,19 @@ def get_prompt_template(prompt_name):
            
        example : prompt/supervisor.md
     """
-    with open("prompt/" + prompt_name + ".md", "r", encoding="utf-8") as f:
+    # 使用绝对路径或相对于当前文件的路径
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    prompt_path = os.path.join(current_dir, "..", "prompt", prompt_name + ".md")
+    with open(prompt_path, "r", encoding="utf-8") as f:
         return f.read()
 
-
-supervisor_agent = create_agents("supervisor_agent", "basic", [assign_to_research_agent, assign_to_flight_booking_agent, assign_to_hotel_booking_agent, assign_to_car_rental_booking_agent, assign_to_excursion_booking_agent], get_prompt_template("supervisor"))
-research_agent = create_agents("research_agent", "basic", [WebSearchTool()], get_prompt_template("researcher"))
+research_agent = create_agents("research_agent", "basic", [WebSearchTool()], get_prompt_template("research"))
 flight_booking_agent = create_agents("flight_booking_agent", "basic", [generic_confirmation], get_prompt_template("flight_booking"))
 hotel_booking_agent = create_agents("hotel_booking_agent", "basic", [generic_confirmation], get_prompt_template("hotel_booking"))
 car_rental_booking_agent = create_agents("car_rental_booking_agent", "basic", [generic_confirmation], get_prompt_template("car_rental_booking"))
 excursion_booking_agent = create_agents("excursion_booking_agent", "basic", [generic_confirmation], get_prompt_template("excursion_booking"))
 recommendation_agent = create_agents("recommendation_agent", "basic", [generic_confirmation], get_prompt_template("recommendation"))
+train_booking_agent = create_agents("train_booking_agent", "basic", [generic_confirmation], get_prompt_template("train_booking"))
+
+
+supervisor_agent = create_agents("supervisor_agent", "basic", [assign_to_research_agent, assign_to_flight_booking_agent, assign_to_hotel_booking_agent, assign_to_car_rental_booking_agent, assign_to_excursion_booking_agent], get_prompt_template("supervisor"))
